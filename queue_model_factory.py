@@ -6,8 +6,14 @@ from queue_input_data import QueueInputData
 class QueueMeasureCalculatorFactory:
     # TODO: dar sequência e definir as outras filas
     def create(self, data: QueueInputData) -> MeasuresCalculator:
-        if data.A == "M" and data.B == "M" and data.m == 1:
-            return MM1Calculator(data)
-        elif data.A == "M" and data.B == "M" and data.m > 1:
-            return MMSCalculator(data)
+        calculator_map = {
+            ('M', 'M', 1): MM1Calculator,
+            ('M', 'M', 'multi'): MMSCalculator
+        }
+        
+        key = (data.A, data.B, 1 if data.m == 1 else 'multi')
+        calculator_class = calculator_map.get(key)
+        
+        if calculator_class:
+            return calculator_class(data)
         raise NotImplementedError("Modelo de fila ainda não implementado.")
