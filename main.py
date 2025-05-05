@@ -1,5 +1,7 @@
 from input import InputCollector
 from queue_model_factory import QueueMeasureCalculatorFactory
+from calculators import mm1
+from outputs import mm1 as mm1_output
 
 
 def main():
@@ -8,12 +10,9 @@ def main():
 
     factory = QueueMeasureCalculatorFactory()
     calculator = factory.create(data)
-
-    # TODO: Criar função que mostre os dados calculados.
-    # Idealmente, deve ser mais uma interface que pede os
-    # dados ao usuário e calcula os valores desejados 
-    # usando as funções já definidas no calculator
-    # específico
-
+    
+    if isinstance(calculator, mm1.MM1Calculator):
+        mm1_output.show_menu(calculator)
+        
 if __name__ == "__main__":
     main()

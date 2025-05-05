@@ -11,4 +11,3 @@ class QueueInputData:
     N: Optional[int]
     lambda_param: float
     mi_param: float
-
