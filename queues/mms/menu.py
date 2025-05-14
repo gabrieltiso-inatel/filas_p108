@@ -29,6 +29,7 @@ def handle_mm1_queue(queue: MM1Queue):
     while True:
         display_menu()
         choice = int(input("Escolha uma opção: "))
+        clear_screen()
 
         match choice:
             case 1:
@@ -75,6 +76,7 @@ def handle_mms_queue(queue: MMsQueue):
     while True:
         display_menu()
         choice = int(input("Escolha uma opção: "))
+        clear_screen()
 
         match choice:
             case 1:

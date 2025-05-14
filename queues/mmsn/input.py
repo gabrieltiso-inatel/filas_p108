@@ -1,13 +1,12 @@
 class Params:
     def __init__(self, lambda_param, mu_param, s_param, n_param):
-        self.lambda_param = lambda_param
-        self.mu_param = mu_param
-        self.s_param = s_param
-        self.n_param = n_param
-        self.rho = lambda_param / mu_param
+        self.lmbd = lambda_param
+        self.mu = mu_param
+        self.s = s_param
+        self.n = n_param
 
     def __str__(self):
-        return f"Lambda: {self.lambda_param}, Mu: {self.mu_param}, S: {self.s_param}, N: {self.n_param}"
+        return f"Lambda: {self.lmbd}, Mu: {self.mu}, S: {self.s}, N: {self.n}"
 
 def get_queue_data():
     lambda_param = float(input("Digite o valore de lamda: ")) 
