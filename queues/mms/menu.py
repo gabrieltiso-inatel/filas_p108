@@ -27,6 +27,8 @@ def display_menu():
 
 def handle_mm1_queue(queue: MM1Queue):
     while True:
+        print(f"\nParâmetros da fila:\n{queue.p}")
+
         display_menu()
         choice = int(input("Escolha uma opção: "))
         clear_screen()
@@ -49,10 +51,10 @@ def handle_mm1_queue(queue: MM1Queue):
                 result = queue.avg_number_clients_in_queue()
                 print(f"Número médio de clientes na fila (Lq): {result}")
             case 6:
-                result = queue.avg_time_in_system()
+                result = queue.avg_time_in_system_per_client()
                 print(f"Tempo médio no sistema (W): {result}")
             case 7:
-                result = queue.avg_time_in_queue()
+                result = queue.avg_time_in_queue_per_client()
                 print(f"Tempo médio na fila (Wq): {result}")
             case 8:
                 t = float(input("Digite o valor de t: "))
@@ -74,6 +76,8 @@ def handle_mm1_queue(queue: MM1Queue):
 
 def handle_mms_queue(queue: MMsQueue):
     while True:
+        print(f"\nParâmetros da fila:\n{queue.p}")
+
         display_menu()
         choice = int(input("Escolha uma opção: "))
         clear_screen()
@@ -122,9 +126,7 @@ def run():
     print("Bem-vindo ao simulador de filas M/M/s!")
     params = get_queue_data()
 
-    print(f"\nParâmetros da fila:\n {params}")
-
-    if params.s_param == 1:
+    if params.s == 1:
         queue = MM1Queue(params)
         handle_mm1_queue(queue)
     else:

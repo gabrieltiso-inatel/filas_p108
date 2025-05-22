@@ -8,7 +8,6 @@ class MMNQueue:
         self.mu = p.mu
         self.p = p
 
-# Giovani
 class MM1NQueue(MMNQueue):
     def __init__(self, p: Params):
         super().__init__(p)
@@ -56,8 +55,6 @@ class MM1NQueue(MMNQueue):
         W = l / avg_lambda 
         return W
             
-
-# Gabriel
 class MMsNQueue(MMNQueue):
     def __init__(self, p: Params):
         super().__init__(p)
