@@ -1,17 +1,17 @@
 class Params:
-    def __init__(self, lambda_param, mu_param, s_param, n_param):
-        self.lmbd = lambda_param
-        self.mu = mu_param
-        self.s = s_param
-        self.n = n_param
+    def __init__(self, lmdb, mu, s, n):
+        self.lmbd = lmdb
+        self.mu = mu
+        self.s = s
+        self.n = n
 
     def __str__(self):
-        return f"Lambda: {self.lmbd}, Mu: {self.mu}, S: {self.s}, N: {self.n}"
+        return f"lambda (λ): {self.lmbd}, mu (μ): {self.mu}, s: {self.s}, n: {self.n}"
 
 def get_queue_data():
-    lambda_param = float(input("Digite o valore de lamda: ")) 
-    mu_param = float(input("Digite o valore de mu: "))
-    s_param = int(input("Digite o valore de s: "))
-    n_param = int(input("Digite o valore de N "))
+    lmbd = float(input("Digite o valore de lamda: ")) 
+    mu = float(input("Digite o valore de mu: "))
+    s = int(input("Digite o valore de s: "))
+    n = int(input("Digite o valore de N "))
 
-    return Params(lambda_param, mu_param, s_param, n_param)
+    return Params(lmbd, mu, s, n)
