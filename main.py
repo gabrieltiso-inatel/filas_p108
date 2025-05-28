@@ -1,6 +1,7 @@
 import queues.mg1.menu as menu_mg1
 import queues.mms.menu as menu_mms
 import queues.mmsn.menu as menu_mmsn
+import queues.mmsk.menu as menu_mmsk
 
 from utils.utils import clear_screen
 
@@ -9,12 +10,13 @@ def display_menu():
     print("1. M/M/1")
     print("2. M/M/s")
     print("3. M/M/s/n")
-    print("4. Sair")
+    print("4. M/M/s/K")
+    print("5. Sair")
 
 def main():
     while True:
         display_menu()
-        choice = input("Digite sua escolha (1-4): ")
+        choice = input("Digite sua escolha (1-5): ")
         clear_screen()
 
         if choice == '1':
@@ -24,6 +26,8 @@ def main():
         elif choice == '3':
             menu_mmsn.run()
         elif choice == '4':
+            menu_mmsk.run()
+        elif choice == '5':
             print("Saindo do programa.")
             break
         else:
