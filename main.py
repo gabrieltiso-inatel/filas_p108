@@ -7,7 +7,7 @@ from utils.utils import clear_screen
 
 def display_menu():
     print("Selecione o tipo de fila:")
-    print("1. M/M/1")
+    print("1. M/G/1")
     print("2. M/M/s")
     print("3. M/M/s/n")
     print("4. M/M/s/K")
