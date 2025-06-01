@@ -12,22 +12,22 @@ class MM1KQueue(MMSK):
 
     def prob_zero_clients_in_system(self):
         """P₀"""
-        if self.rho == 1:
+        if self.p.rho == 1:
             # equal‐rates case: P₀ = 1/(K+1)
             return 1 / (self.p.K + 1)
         # general case
-        return (1 - self.rho) / (1 - self.rho**(self.p.K + 1))
+        return (1 - self.p.rho) / (1 - self.p.rho**(self.p.K + 1))
 
     def prob_n_clients_in_system(self, n: int):
         """Pₙ for 0 ≤ n ≤ K"""
         P0 = self.prob_zero_clients_in_system()
         if 0 <= n <= self.p.K:
-            return P0 * (self.rho**n)
+            return P0 * (self.p.rho**n)
         return 0.0
 
     def avg_number_clients_in_system(self):
         """L = E[# in system]"""
-        K, ρ = self.p.K, self.rho
+        K, ρ = self.p.K, self.p.rho
         P0 = self.prob_zero_clients_in_system()
 
         if ρ == 1:
@@ -95,14 +95,14 @@ class MMSKQueue(MMSK):
         numerator = (
             P0
             * ((self.p.lmbd / self.p.mu) ** self.p.s)
-            * self.rho
+            * self.p.rho
             * (
                 1
-                - self.rho ** (self.p.K - self.p.s)
-                - (self.p.K - self.p.s) * self.rho ** (self.p.K - self.p.s) * (1 - self.rho)
+                - self.p.rho ** (self.p.K - self.p.s)
+                - (self.p.K - self.p.s) * self.p.rho ** (self.p.K - self.p.s) * (1 - self.p.rho)
             )
         )
-        denominator = math.factorial(self.p.s) * (1 - self.rho) ** 2
+        denominator = math.factorial(self.p.s) * (1 - self.p.rho) ** 2
 
         return numerator / denominator
 
