@@ -9,8 +9,8 @@ class Params:
         return f"lambda (λ): {self.lmbd}, mu (μ): {self.mu}, s: {self.s}, rho (ρ): {self.rho}"
 
 def get_queue_data():
-    mu = float(input("Digite o valore de lamda: ")) 
+    lmbd = float(input("Digite o valore de lamda: ")) 
     mu = float(input("Digite o valore de mu: "))
     s = int(input("Digite o valore de s: "))
 
-    return Params(mu, mu, s)
+    return Params(lmbd, mu, s)
