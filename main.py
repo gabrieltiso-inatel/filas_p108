@@ -20,11 +20,11 @@ def main():
         clear_screen()
 
         if choice == '1':
-            menu_mms.run()
-        elif choice == '2':
-            menu_mmsn.run()
-        elif choice == '3':
             menu_mg1.run()
+        elif choice == '2':
+            menu_mms.run()
+        elif choice == '3':
+            menu_mmsn.run()
         elif choice == '4':
             menu_mmsk.run()
         elif choice == '5':
