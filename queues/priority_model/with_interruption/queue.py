@@ -2,18 +2,48 @@ from queues.priority_model.with_interruption.input import Params
 
 class PriorityModelWithInterruptionQueue:
     def __init__(self, p: Params):
-        self.lmbds = p.lmbds
-        self.mu = p.mu
-        self.s = p.s
-        self.K = p.K
         self.p = p
-        
+
+    def avg_waiting_time_in_system(self):
+        avg_wait_in_system_arr = [] 
+        for i in range(self.p.n):
+            nominator = (1 / self.p.mu)
+
+            summation1 = sum(self.p.lmbds[:i]) / (self.p.s * self.p.mu)
+            summation2 = sum(self.p.lmbds[:i+1]) / (self.p.s * self.p.mu)
+
+            term1 = (1 - summation1)
+            term2 = (1 - summation2)
+
+            result = nominator / (term1 * term2)
+            avg_wait_in_system_arr.append(result)
+
+        return avg_wait_in_system_arr
+    
     def avg_waiting_time_in_queue(self):
-        lmbds_array = [self.lmbds]
-        soma_k_1 = sum(lmbds_array[:self.K-1])
-        soma_k = sum(lmbds_array[:self.K])
-        den = 1 - (soma_k_1 + soma_k) / (self.s * self.mu)
-        if den == 0:
-            raise ZeroDivisionError("O denominador é zero, a expressão é indefinida.")
-        W = (1 / self.mu) / den
-        return W
+        avg_wait_in_system_arr = self.avg_waiting_time_in_system()
+        avg_wait_in_queue_arr = []
+
+        for i in range(self.p.n):
+            result = avg_wait_in_system_arr[i] - (1 / self.p.mu)
+            avg_wait_in_queue_arr.append(result)
+
+        return avg_wait_in_queue_arr
+    
+    def avg_clients_in_system(self):
+        avg_wait_in_system_arr = self.avg_waiting_time_in_system()
+        avg_clients_in_system_arr = []
+        for i in range(self.p.n):
+            result = sum(self.p.lmbds[:i+1]) * avg_wait_in_system_arr[i]
+            avg_clients_in_system_arr.append(result)
+
+        return avg_clients_in_system_arr
+    
+    def avg_clients_in_queue(self):
+        avg_clients_in_system_arr = self.avg_clients_in_system()
+        avg_clients_in_queue_arr = []
+        for i in range(self.p.n):
+            result = avg_clients_in_system_arr[i] - (sum(self.p.lmbds[:i+1]) / self.p.mu)
+            avg_clients_in_queue_arr.append(result)
+
+        return avg_clients_in_queue_arr
