@@ -1,3 +1,4 @@
+from tkinter import simpledialog, messagebox
 class Params:
     def __init__(self, n, lmbds, mu, s, total_lambda):
         self.s = s
@@ -11,15 +12,16 @@ class Params:
         return f"n: {self.n}, lambda por prioridade: {self.lmbds}, mu (μ): {self.mu}, s: {self.s}, lambda total: {self.total_lambda}, rho (ρ): {self.rho}"
 
 def get_queue_data():
-    mu = float(input("Digite o valor de mu: "))
-    total_lambda = float(input("Digite o valor de lambda total: "))
-    s = int(input("Digite o valor de s: "))
-    n = int(input("Digite o valor de N: "))
-
-    percentages = input("Digite as porcentagens de lambda separadas por vírgula (ex: 0.1,0.2,0.3): ")
-    lmbds = [float(p.strip()) for p in percentages.split(",")]
+    mu = simpledialog.askfloat("Parâmetro", "Digite o valor de mu: ")
+    total_lambda = simpledialog.askfloat("Parâmetro", "Digite o valor de lambda total: ")
+    s = simpledialog.askinteger("Parâmetro", "Digite o valor de s: ")
+    n = simpledialog.askinteger("Parâmetro", "Digite o valor de N: ")
+    lmbds = []
+    for i in range(n):
+        lmbds.append(simpledialog.askfloat("Parâmetro", f"Digite a porcentagem de lambda p{i+1}:"))
 
     if sum(lmbds) != total_lambda:
+        messagebox.showerror("Erro", "A soma das porcentagens deve ser igual a lambda total.")
         raise ValueError("A soma das porcentagens deve ser igual a lambda total.")
     
     return Params(n, lmbds, mu, s, total_lambda)
