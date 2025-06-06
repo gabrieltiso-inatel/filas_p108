@@ -17,7 +17,7 @@ def get_queue_data():
     n = int(input("Digite o valor de N: "))
 
     percentages = input("Digite as porcentagens de lambda separadas por vírgula (ex: 0.1,0.2,0.3): ")
-    lmbds = [total_lambda * float(p.strip()) for p in percentages.split(",")]
+    lmbds = [float(p.strip()) for p in percentages.split(",")]
 
     if sum(lmbds) != total_lambda:
         raise ValueError("A soma das porcentagens deve ser igual a lambda total.")
