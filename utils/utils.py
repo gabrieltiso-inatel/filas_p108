@@ -126,25 +126,3 @@ def create_queue_window(queue, options, title="Simulador de Filas"):
     queue_loop_tkinter(window, queue, options)
     
     return window
-
-def queue_loop(queue, options):
-    while True:
-        print(f"\nParâmetros da fila:\n{queue.p}")
-
-        show_menu_tkinter(options)
-        choice = int(input("Escolha uma opção: "))
-        clear_screen()
-
-        if choice < 0 or choice > len(options):
-            print("Opção inválida. Tente novamente.")
-            continue
-
-        if choice == len(options):
-            print("Saindo do programa...")
-            break
-
-        fn = options[choice][1]
-        print(f"Resultado: {fn()}")
-
-        input("Pressione Enter para continuar...")
-        clear_screen()

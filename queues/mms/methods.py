@@ -1,4 +1,5 @@
 from queues.mms.queue import MMQueue, MM1Queue
+from tkinter import simpledialog
 
 def method_options(queue: MMQueue):
     if isinstance(queue, MM1Queue):
@@ -6,7 +7,7 @@ def method_options(queue: MMQueue):
             0: (
                 "Probabilidade de n clientes no sistema (Pn)",
                 lambda: queue.prob_n_clients_in_system(
-                    int(input("Digite o valor de n: "))
+                    simpledialog.askinteger("Parâmetro", "Digite o valor de n:")
                 ),
             ),
             1: (
@@ -36,13 +37,13 @@ def method_options(queue: MMQueue):
             7: (
                 "Probabilidade de tempo de espera no sistema maior que t (P(W > t))",
                 lambda: queue.prob_wait_in_system_bigger_than(
-                    float(input("Digite o valor de t: "))
+                    simpledialog.askfloat("Parâmetro", "Digite o valor de t: ")
                 ),
             ),
             8: (
                 "Probabilidade de tempo de espera na fila maior que t (P(Wq > t))",
                 lambda: queue.prob_wait_in_queue_bigger_than(
-                    float(input("Digite o valor de t: "))
+                    simpledialog.askfloat("Parâmetro", "Digite o valor de t: ")
                 ),
             ),
         }
@@ -51,7 +52,7 @@ def method_options(queue: MMQueue):
         0: (
             "Probabilidade de n clientes no sistema (Pn)",
             lambda: queue.prob_n_clients_in_system(
-                int(input("Digite o valor de n: "))
+                simpledialog.askinteger("Parâmetro", "Digite o valor de n:")
             ),
         ),
         1: (
@@ -77,13 +78,13 @@ def method_options(queue: MMQueue):
         6: (
             "Probabilidade de tempo de espera no sistema maior que t (P(W > t))",
             lambda: queue.prob_time_spent_in_system_bigger_than(
-                float(input("Digite o valor de t: "))
+                simpledialog.askfloat("Parâmetro", "Digite o valor de t: ")
             ),
         ),
         7: (
             "Probabilidade de tempo de espera na fila maior que t (P(Wq > t))",
             lambda: queue.prob_time_spent_in_queue_bigger_than(
-                float(input("Digite o valor de t: "))
+                simpledialog.askfloat("Parâmetro", "Digite o valor de t: ")
             ),
         ),
     }

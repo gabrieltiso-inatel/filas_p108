@@ -1,4 +1,5 @@
 from queues.mmsn.queue import MMNQueue, MM1NQueue, MMsNQueue
+from tkinter import simpledialog
 
 def method_options(queue: MMNQueue):
     if isinstance(queue, MM1NQueue):
@@ -6,7 +7,7 @@ def method_options(queue: MMNQueue):
             0: (
                 "Probabilidade de n clientes no sistema (Pn)",
                 lambda: queue.prob_n_clients_in_system(
-                    int(input("Digite o valor de n: "))
+                    simpledialog.askinteger("Parâmetro", "Digite o valor de n:")
                 ),
             ),
             1: (
@@ -36,7 +37,7 @@ def method_options(queue: MMNQueue):
             0: (
                 "Probabilidade de n clientes no sistema (Pn)",
                 lambda: queue.prob_n_clients_in_system(
-                    int(input("Digite o valor de n: "))
+                    simpledialog.askinteger("Parâmetro", "Digite o valor de n:")
                 ),
             ),
             1: (

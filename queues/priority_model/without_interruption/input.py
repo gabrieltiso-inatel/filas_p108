@@ -1,3 +1,4 @@
+from tkinter import simpledialog
 class Params:
     def __init__(self, lmbd, mu, s, K):
         self.lmbd = lmbd
@@ -10,9 +11,9 @@ class Params:
         return f"lambda (λ): {self.lmbd}, mu (μ): {self.mu}, s: {self.s}, K: {self.K}, rho (ρ): {self.rho}"
 
 def get_queue_data():
-    lmbd = float(input("Digite o valor de lambda: ")) 
-    mu = float(input("Digite o valor de mu: "))
-    s = int(input("Digite o valor de s: "))
-    K = int(input("Digite o valor de K: "))
+    lmbd = simpledialog.askfloat("Parâmetro", "Digite o valor de lambda:")
+    mu = simpledialog.askfloat("Parâmetro", "Digite o valor de mu:")
+    s = simpledialog.askinteger("Parâmetro", "Digite o valor de s: ")
+    K = simpledialog.askinteger("Parâmetro", "Digite o valor de K: ")
 
     return Params(lmbd, mu, s, K)
