@@ -85,22 +85,6 @@ class QueueSimulatorApp:
         elif choice == '7':
             print("Saindo do programa.")
     
-    def update_params_display(self):
-        if hasattr(self.current_queue, 'p'):
-            self.params_label.config(text=f"Parâmetros da fila:\n{self.current_queue.p}")
-        else:
-
-            params_text = "Parâmetros da fila:\n"
-            if hasattr(self.current_queue, 'lmbd'):
-                params_text += f"lambda (λ): {self.current_queue.lmbd}, "
-            if hasattr(self.current_queue, 'mu'):
-                params_text += f"mu (μ): {self.current_queue.mu}, "
-            if hasattr(self.current_queue, 's'):
-                params_text += f"s: {self.current_queue.s}, "
-            if hasattr(self.current_queue, 'K'):
-                params_text += f"K: {self.current_queue.K}"
-            self.params_label.config(text=params_text)
-    
     def create_method_buttons(self):
         if self.current_methods:
             methods_label = ttk.Label(self.methods_frame, text="Métodos disponíveis:", font=("Arial", 10, "bold"))
