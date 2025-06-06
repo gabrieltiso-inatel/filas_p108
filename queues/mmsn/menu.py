@@ -2,7 +2,7 @@ from queues.mmsn.input import get_queue_data
 from queues.mmsn.queue import MM1NQueue, MMsNQueue
 from queues.mmsn.methods import method_options
 
-from utils.utils import queue_loop
+from utils.utils import create_queue_window
 
 def run():
     print("Bem-vindo ao simulador de filas M/M/s/n")
@@ -14,4 +14,4 @@ def run():
     else:
         queue = MMsNQueue(params)
 
-    queue_loop(queue, method_options(queue))
+    create_queue_window(queue, method_options(queue))

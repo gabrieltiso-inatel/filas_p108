@@ -1,7 +1,7 @@
 from queues.mmsk.methods import method_options
 from queues.mmsk.queue import MM1KQueue, MMSKQueue
 from queues.mmsk.input import get_queue_data
-from utils.utils import queue_loop
+from utils.utils import create_queue_window
 
 
 def run():
@@ -14,4 +14,4 @@ def run():
     else:
         queue = MMSKQueue(params)
 
-    queue_loop(queue, method_options(queue))
+    create_queue_window(queue, method_options(queue))
