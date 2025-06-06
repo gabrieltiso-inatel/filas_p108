@@ -5,7 +5,6 @@ from queues.mms.methods import method_options
 from utils.utils import create_queue_window
 
 def run():
-    print("Bem-vindo ao simulador de filas M/M/s!")
     params = get_queue_data()
 
     queue = None

@@ -10,7 +10,7 @@ class QueueSimulatorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Simulador de Filas")
-        self.root.geometry("600x500")
+        self.root.geometry("400x300")
         
         self.main_frame = ttk.Frame(root, padding="10")
         self.main_frame.pack(fill=tk.BOTH, expand=True)
@@ -49,15 +49,6 @@ class QueueSimulatorApp:
         
         self.exit_button = ttk.Button(self.button_frame, text="Sair", command=self.root.destroy)
         self.exit_button.pack(side=tk.LEFT, padx=5)
-        
-        self.result_frame = ttk.LabelFrame(self.main_frame, text="Parâmetros e Resultados", padding="10")
-        self.result_frame.pack(fill=tk.BOTH, expand=True, pady=10)
-        
-        self.params_label = ttk.Label(self.result_frame, text="Nenhuma fila configurada")
-        self.params_label.pack(anchor=tk.W, pady=5)
-        
-        self.methods_frame = ttk.Frame(self.result_frame)
-        self.methods_frame.pack(fill=tk.BOTH, expand=True)
         
         self.current_queue = None
         self.current_methods = None

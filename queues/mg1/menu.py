@@ -4,8 +4,6 @@ from queues.mg1.methods import method_options
 from utils.utils import create_queue_window
 
 def run():
-    print("Bem-vindo ao simulador de filas M/G/1!")
-
     params = get_queue_data()
     queue = MG1Queue(params)
 

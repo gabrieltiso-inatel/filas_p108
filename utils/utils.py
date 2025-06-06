@@ -104,7 +104,10 @@ def queue_loop_tkinter(root: tk.Tk, queue, options: Dict[int, Any]):
         try:
             fn = options[choice][1]
             result = fn()
-            result_label.config(text=f"Resultado: {result:.6f}")
+            if(type(result) == float):
+                result_label.config(text=f"Resultado: {result:.2f}")
+            else:
+                result_label.config(text=f"Resultado: {result}")
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao executar método: {str(e)}")
     

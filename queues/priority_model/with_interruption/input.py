@@ -21,7 +21,6 @@ def get_queue_data():
         lmbds.append(simpledialog.askfloat("Parâmetro", f"Digite a porcentagem de lambda p{i+1}:"))
 
     if sum(lmbds) != total_lambda:
-        messagebox.showerror("Erro", "A soma das porcentagens deve ser igual a lambda total.")
         raise ValueError("A soma das porcentagens deve ser igual a lambda total.")
     
     return Params(n, lmbds, mu, s, total_lambda)
