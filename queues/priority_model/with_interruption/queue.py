@@ -53,6 +53,8 @@ class PriorityModelWithInterruptionQueueWithParamsMultipleServers:
     def __init__(self, p: Params):
         self.p = p
 
+        self.avg_clients_in_system_arr = []
+
     def avg_waiting_time_in_system(self):
         avg_waiting_time_in_system_arr = []
         for i in range(self.p.n):
@@ -77,42 +79,50 @@ class PriorityModelWithInterruptionQueueWithParamsMultipleServers:
     def avg_clients_in_system(self):
         avg_wait_in_system_arr = self.avg_waiting_time_in_system()
         avg_clients_in_system_arr = []
-
         for i in range(self.p.n):
+            sum_lambdas = sum(self.p.lmbds[:i+1])
             if i == 0:
-                result = self.avg_clients_in_queue()[i] + (self.p.lmbds[i] / self.p.mu)
+                result = self.avg_clients_in_queue()[i] + (sum_lambdas / self.p.mu)
                 avg_clients_in_system_arr.append(result)
                 continue
 
-            result = sum(self.p.lmbds[:i+1]) * avg_wait_in_system_arr[i]
+            result = sum_lambdas * avg_wait_in_system_arr[i]
             avg_clients_in_system_arr.append(result)
 
+        self.avg_clients_in_system_arr = avg_clients_in_system_arr
         return avg_clients_in_system_arr
     
     def avg_clients_in_queue(self):
-        avg_clients_in_system_arr = self.avg_clients_in_system()
+        avg_clients_in_system_arr = self.avg_clients_in_system_arr
         avg_clients_in_queue_arr = []
         for i in range(self.p.n):
+            sum_lambdas = sum(self.p.lmbds[:i+1])
+            rho = sum_lambdas / (self.p.s * self.p.mu)
             if i == 0:
-                nominator = (self.calculate_p0() * (self.p.total_lambda / self.p.mu)**self.p.s * self.p.rho)
-                denominator = factorial(self.p.s) * (1 - self.p.rho)**2
+                nominator = (self.calculate_p0(sum_lambdas) * (sum_lambdas / self.p.mu)**self.p.s * rho)
+                denominator = factorial(self.p.s) * (1 - rho)**2
                 avg_clients_in_queue_arr.append(nominator / denominator)
                 continue
 
-            result = avg_clients_in_system_arr[i] - (sum(self.p.lmbds[:i+1]) / self.p.mu)
+            result = avg_clients_in_system_arr[i] - (sum_lambdas / self.p.mu)
             avg_clients_in_queue_arr.append(result)
 
         return avg_clients_in_queue_arr
     
     def calculate_average_waiting_time_in_system(self, i):
-        nominator = (self.calculate_p0() * ((sum(self.p.lmbds[:i+1]) / self.p.mu)**self.p.s) * self.p.rho)
-        denominator = factorial(self.p.s) * (1 - self.p.rho)**2
-        term1 = nominator / denominator
-    
-        return term1 + (sum(self.p.lmbds[:i+1]) / self.p.mu)
+        sum_lambdas = sum(self.p.lmbds[:i+1])
+        rho = sum_lambdas / (self.p.s * self.p.mu)
 
-    def calculate_p0(self):
-        summation = sum(((self.p.total_lambda / self.p.mu)**n) / factorial(n) for n in range(self.p.s))
-        term1 = ((self.p.total_lambda / self.p.mu)**self.p.s) / factorial(self.p.s)
-        term2 = 1 / (1 - (self.p.total_lambda / (self.p.s * self.p.mu)))
+        nominator = (self.calculate_p0(sum_lambdas) * ((sum_lambdas / self.p.mu)**self.p.s) * rho)
+        denominator = (factorial(self.p.s) * (1 - rho)**2)
+
+        lq = nominator / denominator
+        l = lq + (sum_lambdas / self.p.mu)
+
+        return l / sum_lambdas
+
+    def calculate_p0(self, lmbd):
+        summation = sum(((lmbd / self.p.mu)**n) / factorial(n) for n in range(self.p.s))
+        term1 = ((lmbd / self.p.mu)**self.p.s) / factorial(self.p.s)
+        term2 = 1 / (1 - (lmbd / (self.p.s * self.p.mu)))
         return 1 / (summation + term1 * term2)
