@@ -20,7 +20,7 @@ def get_queue_data():
     for i in range(n):
         percentages.append(simpledialog.askfloat("Parâmetro", f"Digite a porcentagem de lambda p{i+1}:"))
         
-    lmbds = [total_lambda * float(p.strip()) for p in percentages]
+    lmbds = [total_lambda * p for p in percentages]
 
     if sum(lmbds) != total_lambda:
         raise ValueError("A soma das porcentagens deve ser igual a lambda total.")
