@@ -82,9 +82,11 @@ class PriorityModelWithInterruptionQueueWithParamsMultipleServers:
 
 
     def wq(self, i):
+        self.fill_w(i)
         return self.w(i) - (1 / self.p.mu)
 
     def l(self, i):
+        self.fill_w(i)
         if i == 0:
             return self.lq(i) + (self.p.lmbds[0] / self.p.mu)
         return self.cummulative_lmbd(i) * self.w(i)
@@ -92,7 +94,12 @@ class PriorityModelWithInterruptionQueueWithParamsMultipleServers:
     def lq(self, i):
         if i == 0:
             return self.wait_in_queue_mms(self.p.lmbds[0], self.cummulative_rho(self.p.lmbds[0]))
-        return self.avg_clients_in_system()[i] - (self.cummulative_lmbd(i) / self.p.mu)
+        return self.l(i) - (self.cummulative_lmbd(i) / self.p.mu)
+    
+    def fill_w(self, i):
+        self.wait_in_system_arr = []
+        for j in range(i):
+            self.w(j)
 
     def cummulative_rho(self, lmbd):
         return lmbd / (self.p.s * self.p.mu)
