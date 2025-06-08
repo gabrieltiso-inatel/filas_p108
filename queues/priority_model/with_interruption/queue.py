@@ -52,6 +52,7 @@ class PriorityModelWithInterruptionQueueOneServer:
 class PriorityModelWithInterruptionQueueWithParamsMultipleServers:
     def __init__(self, p: Params):
         self.p = p
+        self.wait_in_system_arr = []
 
     def avg_waiting_time_in_system(self):
         return [self.w(i) for i in range(self.p.n)]
@@ -67,12 +68,18 @@ class PriorityModelWithInterruptionQueueWithParamsMultipleServers:
 
     def w(self, i):
         if i == 0:
-            return self.l(i) / self.p.lmbds[0]
-        
+            res = self.l(i) / self.p.lmbds[0]
+            self.wait_in_system_arr.append(res)
+            return res
+
         avg_w = self.wait_in_system_mms(i)
-        print(avg_w)
-        lmbd_percentages = [lmbd / self.cummulative_lmbd(i) for lmbd in self.p.lmbds[:i+1]]
-        return (avg_w - sum(lmbd_percentages[:len(lmbd_percentages) - 2])) / (lmbd_percentages[-1])
+        percentages = [self.p.lmbds[j] / self.cummulative_lmbd(i) for j in range(i+1)]
+        percentage_sum = sum([self.wait_in_system_arr[j] * percentages[j] for j in range(i)])
+
+        res = (avg_w - percentage_sum) / percentages[i]
+        self.wait_in_system_arr.append(res)
+        return res
+
 
     def wq(self, i):
         return self.w(i) - (1 / self.p.mu)
