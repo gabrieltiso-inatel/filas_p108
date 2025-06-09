@@ -54,10 +54,9 @@ class MMsQueue(MMQueue):
         return 1 / (summation + first_term * second_term)
 
     def prob_n_clients_in_system(self, n):
-        if n <= self.p.s:
+        if n < self.p.s:
             return ((self.p.lmbd / self.p.mu)**n / math.factorial(n)) * self.prob_zero_clients_in_system()
-
-        return ((self.p.lmbd / self.p.mu)**n / (math.factorial(self.p.s) * self.p.s**(n - self.p.s))) * self.prob_zero_clients_in_system()
+        return ((self.p.lmbd / self.p.mu)**n / ((math.factorial(self.p.s) * self.p.s**(n - self.p.s)) * self.prob_zero_clients_in_system()))
     
     def prob_time_spent_in_system_bigger_than(self, t):
         assert t >= 0, "Tempo deve ser maior ou igual a zero"
@@ -83,7 +82,7 @@ class MMsQueue(MMQueue):
         return self.avg_number_clients_in_queue() + (self.p.lmbd / self.p.mu)
     
     def avg_time_in_queue(self):
-        return self.avg_number_clients_in_queue() / self.p.mu
+        return self.avg_number_clients_in_queue() / self.p.lmbd
     
     def avg_time_in_system(self):
         return self.avg_number_clients_in_system() / self.p.lmbd
