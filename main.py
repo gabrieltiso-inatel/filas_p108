@@ -3,6 +3,7 @@ import queues.mms.menu as menu_mms
 import queues.mmsn.menu as menu_mmsn
 import queues.mmsk.menu as menu_mmsk
 import queues.priority_model.with_interruption.menu as menu_priority_with_interruption
+import queues.priority_model.without_interruption.menu as menu_priority_without_interruption
 
 from utils.utils import clear_screen
 
@@ -31,7 +32,7 @@ def main():
         elif choice == '4':
             menu_mmsk.run()
         elif choice == '5':
-            print("Opção 5 selecionada.")
+            menu_priority_without_interruption.run()
             break
         elif choice == '6':
             menu_priority_with_interruption.run()
