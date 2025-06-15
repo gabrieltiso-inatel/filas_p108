@@ -10,23 +10,18 @@ class PriorityModelWithoutInterruption:
         self.p = p
     
     def avg_waiting_time_in_system(self) -> list[float]:
-        """
-        Returns a list of average times each priority class spends in the system (waiting + service).
-        """
-        p = self.p
-        r = p.total_lambda / p.mu
-        sum_one = sum((r**j) / factorial(j) for j in range(p.s))
-        term_A = (factorial(p.s) * (p.s * p.mu - p.total_lambda) / (r**p.s) * sum_one) + (p.s * p.mu)
-    
-        results = []
-        for i in range(p.n):
-            raw_sum_k = sum(p.lmbds[:i])
-            raw_sum_k1 = sum(p.lmbds[:i+1])
-            term_B = 1 - (raw_sum_k1 / (p.s * p.mu))
-            term_C = 1 - (raw_sum_k / (p.s * p.mu))
-            denom = (term_A * term_B * term_C) + (1 / p.mu)
-            results.append(1 / denom)
-        return results
+        ret = []
+        for i in range(self.p.n):
+            r = self.p.lmbds[i] / self.p.mu
+            summation1 = sum([(r**j) / factorial(j) for j in range(self.p.s)])
+
+            term1 = factorial(self.p.s) * ((self.p.s*self.p.mu - self.p.lmbds[i]) / (r**self.p.s)) * summation1 + self.p.s*self.p.mu
+            term2 = (1 - (sum(self.p.lmbds[:i]) / (self.p.s * self.p.mu)))
+            term3 = (1 - (sum(self.p.lmbds[:i + 1]) / (self.p.s * self.p.mu)))
+
+            ret.append((1 / (term1 * term2 * term3)) + (1 / self.p.mu))
+
+        return ret
 
     def avg_waiting_time_in_queue(self) -> list[float]:
         """
