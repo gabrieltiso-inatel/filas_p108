@@ -77,10 +77,16 @@ class MMsNQueue(MMNQueue):
         return sum(n * self.prob_n_clients_in_system(n) for n in range(1, self.p.n + 1))
     
     def avg_number_clients_in_queue(self):
-        return self.avg_number_clients_in_system() - (self.p.lmbd / self.p.mu)*(self.p.n - self.avg_number_clients_in_system())
+        L = self.avg_number_clients_in_system()
+        return L - (self.p.lmbd / self.p.mu) * (self.p.n - L)
     
     def avg_time_in_system(self):
-        return self.avg_number_clients_in_system() / (self.p.lmbd * (self.p.n - self.avg_number_clients_in_system()))
-    
+        L = self.avg_number_clients_in_system()
+        eff_lambda = self.p.lmbd * (self.p.n - L)
+        return L / eff_lambda
+
     def avg_time_in_queue(self):
-        return self.avg_number_clients_in_queue() / (self.p.lmbd * (self.p.n - self.avg_number_clients_in_system()))
+        Lq = self.avg_number_clients_in_queue()
+        L = self.avg_number_clients_in_system()
+        eff_lambda = self.p.lmbd * (self.p.n - L)
+        return Lq / eff_lambda
