@@ -21,5 +21,8 @@ def get_queue_data():
 
     if sum(lmbds) != total_lambda:
         raise ValueError("A soma das porcentagens deve ser igual a lambda total.")
+
+    if sum(lmbds) >= s * mu:
+        raise ValueError("Sistema instável: ∑λ_i ≥ sμ")
     
     return Params(n, lmbds, mu, s, total_lambda)
