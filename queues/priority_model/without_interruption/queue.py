@@ -8,26 +8,25 @@ class PriorityModelWithoutInterruption:
     """
     def __init__(self, p: Params):
         self.p = p
-
+    
     def avg_waiting_time_in_system(self) -> list[float]:
         """
         Returns a list of average times each priority class spends in the system (waiting + service).
         """
         p = self.p
         r = p.total_lambda / p.mu
-        sum_one = sum(r**j / factorial(j) for j in range(p.s))
+        sum_one = sum((r**j) / factorial(j) for j in range(p.s))
         term_A = (factorial(p.s) * (p.s * p.mu - p.total_lambda) / (r**p.s) * sum_one) + (p.s * p.mu)
-
-        waiting_times = []
+    
+        results = []
         for i in range(p.n):
             raw_sum_k = sum(p.lmbds[:i])
             raw_sum_k1 = sum(p.lmbds[:i+1])
             term_B = 1 - (raw_sum_k1 / (p.s * p.mu))
             term_C = 1 - (raw_sum_k / (p.s * p.mu))
             denom = (term_A * term_B * term_C) + (1 / p.mu)
-            waiting_times.append(1 / denom)
-
-        return waiting_times
+            results.append(1 / denom)
+        return results
 
     def avg_waiting_time_in_queue(self) -> list[float]:
         """
