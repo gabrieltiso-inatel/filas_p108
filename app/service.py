@@ -22,6 +22,9 @@ from queues.priority_model.with_interruption.queue import (
 )
 from queues.priority_model.with_interruption.input import Params as PriorityParams
 
+from queues.priority_model.without_interruption.queue import PriorityModelWithoutInterruption
+from queues.priority_model.without_interruption.input import Params as PriorityWithoutInterruptionParams
+
 class StreamlitQueueService:
     
     def calculate_mg1(self, lmbd: float, avg_service_time: float, service_time_variance: float) -> Dict[str, Any]:
@@ -200,6 +203,28 @@ class StreamlitQueueService:
         
         params = PriorityParams(n, lmbds, mu, s, total_lambda)
         queue = PriorityModelWithInterruptionQueueWithParamsMultipleServers(params)
+        
+        return {
+            "avg_waiting_time_in_system": queue.avg_waiting_time_in_system(),
+            "avg_waiting_time_in_queue": queue.avg_waiting_time_in_queue(),
+            "avg_clients_in_system": queue.avg_clients_in_system(),
+            "avg_clients_in_queue": queue.avg_clients_in_queue()
+        }
+
+    def calculate_priority_without_interruption(self, n: int, lmbds: List[float], mu: float, s: int, total_lambda: float) -> Dict[str, Any]:
+        """Calculate priority queue without interruption"""
+        if len(lmbds) != n:
+            raise ValueError(f"Number of lambdas ({len(lmbds)}) must match n ({n})")
+        
+        if not all(x > 0 for x in lmbds) or mu <= 0:
+            raise ValueError("All rates must be positive")
+        
+        # Check stability condition for without interruption
+        if sum(lmbds) >= s * mu:
+            raise ValueError("Sistema instável: ∑λ_i ≥ sμ")
+        
+        params = PriorityWithoutInterruptionParams(n, lmbds, mu, s, total_lambda)
+        queue = PriorityModelWithoutInterruption(params)
         
         return {
             "avg_waiting_time_in_system": queue.avg_waiting_time_in_system(),

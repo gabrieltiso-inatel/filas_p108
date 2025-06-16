@@ -33,7 +33,6 @@ def main():
             menu_mmsk.run()
         elif choice == '5':
             menu_priority_without_interruption.run()
-            break
         elif choice == '6':
             menu_priority_with_interruption.run()
         elif choice == '7':

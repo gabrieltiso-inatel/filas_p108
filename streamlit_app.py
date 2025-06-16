@@ -10,6 +10,7 @@ from interfaces.mmsn_interface import mmsn_interface
 from interfaces.mmsk_interface import mmsk_interface
 from interfaces.priority_single_interface import priority_single_server_interface
 from interfaces.priority_multiple_interface import priority_multiple_servers_interface
+from interfaces.priority_without_interruption_interface import priority_without_interruption_interface
 
 st.set_page_config(
     page_title="Calculadora de Teoria de Filas",
@@ -33,7 +34,8 @@ model_type = st.sidebar.selectbox(
         "Fila M/M/s/n",
         "Fila M/M/s/K",
         "Fila de Prioridade (Servidor Único)",
-        "Fila de Prioridade (Múltiplos Servidores)"
+        "Fila de Prioridade (Múltiplos Servidores)",
+        "Fila de Prioridade (Sem Interrupção)"
     ]
 )
 
@@ -47,7 +49,8 @@ model_descriptions = {
     "Fila M/M/s/n": "M/M/s com capacidade limitada do sistema",
     "Fila M/M/s/K": "M/M/s com capacidade limitada e perda de clientes",
     "Fila de Prioridade (Servidor Único)": "Fila com prioridades preemptivas, 1 servidor",
-    "Fila de Prioridade (Múltiplos Servidores)": "Fila com prioridades preemptivas, múltiplos servidores"
+    "Fila de Prioridade (Múltiplos Servidores)": "Fila com prioridades preemptivas, múltiplos servidores",
+    "Fila de Prioridade (Sem Interrupção)": "Fila com prioridades não-preemptivas, sem interrupção"
 }
 
 st.sidebar.info(model_descriptions[model_type])
@@ -67,6 +70,20 @@ st.sidebar.markdown("""
 - **P₀**: Probabilidade do sistema vazio
 """)
 
+# Priority models comparison
+if "Prioridade" in model_type:
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("### Tipos de Prioridade:")
+    st.sidebar.markdown("""
+    **Com Interrupção (Preemptivo):**
+    - Clientes de alta prioridade podem interromper o atendimento
+    - Condição de estabilidade: ρ < 1
+    
+    **Sem Interrupção (Não-Preemptivo):**
+    - Clientes aguardam o término do atendimento atual
+    - Condição de estabilidade: ∑λᵢ < s×μ (mais restritiva)
+    """)
+
 st.markdown("---")
 
 if model_type == "Fila M/G/1":
@@ -81,6 +98,8 @@ elif model_type == "Fila de Prioridade (Servidor Único)":
     priority_single_server_interface()
 elif model_type == "Fila de Prioridade (Múltiplos Servidores)":
     priority_multiple_servers_interface()
+elif model_type == "Fila de Prioridade (Sem Interrupção)":
+    priority_without_interruption_interface()
 
 st.markdown("---")
 st.markdown("""
