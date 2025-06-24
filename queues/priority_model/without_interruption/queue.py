@@ -8,10 +8,10 @@ class PriorityModelWithoutInterruption:
     def avg_waiting_time_in_system(self) -> list[float]:
         ret = []
         for i in range(self.p.n):
-            r = self.p.lmbds[i] / self.p.mu
+            r = self.p.total_lambda / self.p.mu
             summation1 = sum([(r**j) / factorial(j) for j in range(self.p.s)])
 
-            term1 = factorial(self.p.s) * ((self.p.s*self.p.mu - self.p.lmbds[i]) / (r**self.p.s)) * summation1 + self.p.s*self.p.mu
+            term1 = factorial(self.p.s) * ((self.p.s*self.p.mu - self.p.total_lambda) / (r**self.p.s)) * summation1 + self.p.s*self.p.mu
             term2 = (1 - (sum(self.p.lmbds[:i]) / (self.p.s * self.p.mu)))
             term3 = (1 - (sum(self.p.lmbds[:i + 1]) / (self.p.s * self.p.mu)))
 

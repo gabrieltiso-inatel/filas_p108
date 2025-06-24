@@ -1,5 +1,3 @@
-from queues.priority_model.without_interruption.queue import PriorityModelWithoutInterruption
-
 def method_options(queue):
     return {
         0: (
